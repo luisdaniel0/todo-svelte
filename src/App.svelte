@@ -1,4 +1,6 @@
 <script lang="ts">
+  import TodoItem from "./components/TodoItem.svelte";
+
   interface Todo {
     id: string;
     name: string;
@@ -8,12 +10,11 @@
   let todos = $state<Todo[]>([]);
   let newTodo = $state("");
 
-  let title = "Todo App";
+  const title = "Todo App";
 
   function addTodo(todo: Todo) {
     todos = [...todos, todo];
     newTodo = "";
-    console.log(todos);
   }
 
   function toggleComplete(id: string) {
@@ -25,18 +26,19 @@
       }
     });
   }
+
+  function deleteTodo(id: string) {
+    todos = todos.filter((todo) => todo.id !== id);
+  }
 </script>
 
 <h1>{title}</h1>
 
-{#each todos as todo (todo.id)}
-  <li>{todo.name}</li>
-  <input
-    type="checkbox"
-    id={todo.id}
-    onclick={() => toggleComplete(todo.id)}
-  /><label for="isCompleted">Completed</label>
-{/each}
+<div class="todos">
+  {#each todos as todo (todo.id)}
+    <TodoItem {todo} {toggleComplete} {deleteTodo} />
+  {/each}
+</div>
 
 <input
   type="text"
