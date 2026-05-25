@@ -16,9 +16,7 @@
     console.log(todos);
   }
 
-  function toggleComplete(e, id: string) {
-    console.log(e);
-
+  function toggleComplete(id: string) {
     todos = todos.map((todo) => {
       if (todo.id === id) {
         return { ...todo, isCompleted: !todo.isCompleted };
@@ -36,7 +34,7 @@
   <input
     type="checkbox"
     id={todo.id}
-    onclick={(e) => toggleComplete(e, todo.id)}
+    onclick={() => toggleComplete(todo.id)}
   /><label for="isCompleted">Completed</label>
 {/each}
 
