@@ -9,6 +9,11 @@
 
   let todos = $state<Todo[]>([]);
   let newTodo = $state("");
+  let remaining = $derived(todos.filter((todo) => !todo.isCompleted).length);
+
+  $effect(() => {
+    console.log(remaining);
+  });
 
   const title = "Todo App";
 
@@ -35,6 +40,7 @@
 <h1>{title}</h1>
 
 <div class="todos">
+  <h2>Todos remaining {remaining}</h2>
   {#each todos as todo (todo.id)}
     <TodoItem {todo} {toggleComplete} {deleteTodo} />
   {/each}
@@ -49,7 +55,8 @@
 />
 
 <style>
-  h1 {
+  h1,
+  h2 {
     color: orangered;
   }
 </style>
